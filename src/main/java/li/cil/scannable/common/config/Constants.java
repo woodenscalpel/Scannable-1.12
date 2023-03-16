@@ -40,6 +40,7 @@ public final class Constants {
     public static final String CONFIG_ENERGY_MODULE_FLUID = "config.scannable.energyCostModuleFluid";
     public static final String CONFIG_ENERGY_MODULE_ENTITY = "config.scannable.energyCostModuleEntity";
     public static final String CONFIG_BASE_SCAN_RADIUS = "config.scannable.baseScanRadius";
+    public static final String CONFIG_ENTITY_BLACKLIST = "config.scannable.entityBlacklist";
     public static final String CONFIG_BLOCK_BLACKLIST = "config.scannable.blockBlacklist";
     public static final String CONFIG_ORE_BLACKLIST = "config.scannable.oreBlacklist";
     public static final String CONFIG_ORE_COLORS = "config.scannable.oreColors";

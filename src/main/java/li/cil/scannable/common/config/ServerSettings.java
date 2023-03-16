@@ -25,6 +25,8 @@ public final class ServerSettings {
     final String[] statesRare;
     final String[] structures;
     final String[] fluidBlacklist;
+    public String[] entityBlacklist;
+
 
     public ServerSettings(final PacketBuffer packet) {
         useEnergy = packet.readBoolean();
@@ -47,6 +49,8 @@ public final class ServerSettings {
         statesRare = readStringArray(packet);
         structures = readStringArray(packet);
         fluidBlacklist = readStringArray(packet);
+        entityBlacklist = readStringArray(packet);
+
     }
 
     public ServerSettings() {
@@ -70,6 +74,8 @@ public final class ServerSettings {
         statesRare = Settings.statesRare;
         structures = Settings.structures;
         fluidBlacklist = Settings.fluidBlacklist;
+        entityBlacklist = Settings.entityBlacklist;
+
     }
 
     public void writeToBuffer(final PacketBuffer packet) {
@@ -93,6 +99,8 @@ public final class ServerSettings {
         writeStringArray(packet, statesRare);
         writeStringArray(packet, structures);
         writeStringArray(packet, fluidBlacklist);
+        writeStringArray(packet, entityBlacklist);
+
     }
 
     // --------------------------------------------------------------------- //

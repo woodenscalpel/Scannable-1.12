@@ -95,6 +95,12 @@ public final class Settings {
     @Config.RequiresWorldRestart
     public static String[] oreBlacklist = {
     };
+    @Config.LangKey(Constants.CONFIG_ENTITY_BLACKLIST)
+    @Config.Comment("Registry names of entities that will never be scanned")
+    @Config.RequiresWorldRestart
+    public static String[] entityBlacklist = {
+            //"minecraft:zombie" #Test
+    };
 
     @Config.LangKey(Constants.CONFIG_ORE_BLACKLIST)
     @Config.Comment("Registry names of blocks that will never be scanned.")
@@ -265,6 +271,7 @@ public final class Settings {
 
     private static ServerSettings serverSettings;
     private static final Set<Block> blockBlacklistSet = new HashSet<>();
+    private static final Set<String> entityBlacklistSet = new HashSet<>();
 
     public static void setServerSettings(@Nullable final ServerSettings serverSettings) {
         Settings.serverSettings = serverSettings;
@@ -278,12 +285,25 @@ public final class Settings {
                 blockBlacklistSet.add(block);
             }
         }
+        //Entity Blacklist
+        entityBlacklistSet.clear();
+        for (final String entityName : getEntityBlacklist()) {
+
+            final String entity = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(entityName)).getName(); //TODO uses entity name string rather than resourcelocation, I cant pull the resourcelocation from the Entity Instance.
+
+
+            if (entity != null ) {
+                entityBlacklistSet.add(entity);
+            }
+        }
     }
 
     public static Set<Block> getBlockBlacklistSet() {
         return blockBlacklistSet;
     }
-
+    public static Set<String> getEntityBlacklistSet() {
+        return entityBlacklistSet;
+    }
     // --------------------------------------------------------------------- //
 
     public static boolean useEnergy() {
@@ -336,6 +356,10 @@ public final class Settings {
 
     public static String[] getBlockBlacklist() {
         return serverSettings != null ? serverSettings.blockBlacklist : blockBlacklist;
+    }
+
+    private static String[] getEntityBlacklist() {
+        return serverSettings != null ? serverSettings.entityBlacklist : entityBlacklist;
     }
 
     public static String[] getOreBlacklist() {

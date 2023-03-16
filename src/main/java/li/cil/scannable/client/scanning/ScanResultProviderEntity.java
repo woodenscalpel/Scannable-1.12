@@ -26,14 +26,11 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Consumer;
 
 public final class ScanResultProviderEntity extends AbstractScanResultProvider {
@@ -107,6 +104,7 @@ public final class ScanResultProviderEntity extends AbstractScanResultProvider {
     @Override
     public void computeScanResults(final Consumer<ScanResult> callback) {
         final World world = player.getEntityWorld();
+        final Set<String> blacklist = Settings.getEntityBlacklistSet();
         for (int i = 0; i < chunksPerTick; i++) {
             if (!moveNext()) {
                 return;
@@ -117,6 +115,12 @@ public final class ScanResultProviderEntity extends AbstractScanResultProvider {
                 if (entity.isDead) {
                     continue;
                 }
+
+                entity.getEntityId();
+                if (blacklist.contains(entity.getName())) {
+                    continue;
+                }
+
 
                 final Vec3d position = entity.getPositionVector();
                 if (center.distanceTo(position) < radius) {
